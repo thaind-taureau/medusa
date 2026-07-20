@@ -25,7 +25,7 @@ export default async (
     moduleDeclaration?.options ??
     {}) as RedisCacheModuleOptions
 
-  const { redisUrl, ...redisOptions_ } = moduleOptions
+  const { redisUrl, redisOptions: customRedisOptions } = moduleOptions
   if (!redisUrl) {
     throw new Error("[caching-redis] redisUrl is required")
   }
@@ -39,7 +39,7 @@ export default async (
     maxRetriesPerRequest: 3,
     enableOfflineQueue: true,
     connectionName: "medusa-cache-redis",
-    ...redisOptions_,
+    ...customRedisOptions,
   }
 
   redisClient = new Redis(redisUrl!, redisOptions)
